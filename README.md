@@ -27,6 +27,22 @@ reviewing and merging pull requests.
 By addressing these issues, `GitPow` aims to provide a faster, more accessible,
 and easier-to-contribute-to alternative for integrating Git with PowerShell.
 
+## Git summary status
+
+By default GitPow dosen't add anything into your setup, you have to integrate it
+manually with your powershell.
+
+```powershell
+function prompt {
+    $cmdLine = "gitpow status"
+    "PS $($executionContext.SessionState.Path.CurrentLocation)$(Invoke-Expression $cmdLine)$('>' * ($nestedPromptLevel + 1)) ";
+}
+```
+
+Please refer to the official powershell documentation for more information:
+
+- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_prompts?view=powershell-7.4
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE). You are free to use,

@@ -17,6 +17,16 @@ func main() {
 		Compiled:    time.Now(),
 		Commands: []*cli.Command{
 			{
+				Name:    "status",
+				Aliases: []string{"s"},
+				Usage:   "This command is used to provide git status summary.",
+				Action: func(ctx *cli.Context) error {
+					fmt.Println(" [git_summary]")
+
+					return nil
+				},
+			},
+			{
 				Name:    "complete",
 				Aliases: []string{"c"},
 				Usage:   "This command is used to provide context sensitive command line completion.",
@@ -43,6 +53,7 @@ func main() {
 					position := ctx.String("position")
 
 					fmt.Println("complete", "teste", word, cmdline, position)
+
 					return nil
 				},
 			},
