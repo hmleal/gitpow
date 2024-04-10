@@ -4,10 +4,38 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
 	"time"
 
 	"github.com/urfave/cli/v2"
 )
+
+func RunCommand(command string, params ...string) ([]byte, error) {
+	cmd := exec.Command(command, params...)
+
+	result, err := cmd.Output()
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func ShowStatus() bool {
+	_, err := RunCommand("git", "rev-parse", "--is-inside-work-tree")
+
+	return err == nil
+}
+
+func GitStatus() string {
+	if !ShowStatus() {
+		return ""
+	}
+
+	res, _ := RunCommand("git", "branch", "--show-current", "--no-color")
+
+	return string(res)
+}
 
 func main() {
 	app := &cli.App{
@@ -21,7 +49,7 @@ func main() {
 				Aliases: []string{"s"},
 				Usage:   "This command is used to provide git status summary.",
 				Action: func(ctx *cli.Context) error {
-					fmt.Println(" [git_summary]")
+					fmt.Printf(" [%s]", GitStatus())
 
 					return nil
 				},
@@ -52,7 +80,7 @@ func main() {
 					cmdline := ctx.String("commandline")
 					position := ctx.String("position")
 
-					fmt.Println("complete", "teste", word, cmdline, position)
+					fmt.Println("NotImplementedError", word, cmdline, position)
 
 					return nil
 				},
